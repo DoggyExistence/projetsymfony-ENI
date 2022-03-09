@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1 class="text-center mt-3">Détail de la sortie</h1>
+
+    {% if sortie.etat.libelle == 'Annulée' %}
+        <div class="alert alert-dismissible alert-danger my-3 col-8 mx-auto div-detail">
+            <p><strong>La sortie est annulée : </strong></p>
+            <p>{{ sortie.motif }}</p>
+        </div>
+    {% endif %}
+
+    <div class="mx-auto mt-3">
+        <div class="div-detail col-8 mx-auto py-4">
+            <div class="d-flex mx-auto">
+                <div class="col-6 p-2 div-detail-col me-5">
+                    <p>Nom de la sortie : {{ sortie.nom }}</p>
+                    <p>Date et heure de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y h:i') }}</p>
+                    <p>Date limite d'inscription : {{ sortie.dateLimiteInscription | date('d/m/Y') }}</p>
+                    <p>Nombre de places : {{ sortie.nbInsciptionsMax }}</p>
+                    {% if sortie.duree >= 60 %}
+                        <p>Durée : {{ (sortie.duree/60) | number_format(0, '.', ',')  }} heures</p>
+                    {% else %}
+                        <p>Durée : {{ (sortie.duree) }} minutes</p>
+                    {% endif %}
+                    <p>Description et infos : {{ sortie.infosSortie }}</p>
+                </div>
+                <div class="col-6 p-2 div-detail-col">
+                    <p>Site : {{ sortie.site.nom }}</p>
+                    <p>Lieu de la sortie : {{ lieu.nom }}</p>
+                    <p>Rue : {{ lieu.rue }}</p>
+                    <p>Ville : {{ lieu.ville }}</p>
+                    <p>Code postal : {{ lieu.codePostal }}</p>
+                    <p>Latitude : {{ lieu.latitude }}</p>
+                    <p>Longitude : {{ lieu.longitude }}</p>
+                </div>
+            </div>
+            <div class="d-flex mt-3 ms-2">
+                {% if sortie.etat.libelle != 'Annulée' and sortie.dateHeureDebut > date() and not sortie.participants.contains(utilisateur) %}
+                    <form method="post"
+                          action="{{ path('sortie_inscrire', {'id': sortie.id}) }}"
+                          class="me-2"
+                          onsubmit="return confirm('Confirmation de l\'inscription ?')">
+                        <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">
+                        <button class="btn btn-primary">S'inscrire</button>
+                    </form>
+                {%  endif %}
+                {% if sortie.participants.contains(utilisateur) and sortie.dateHeureDebut > date() and sortie.etat.libelle != 'Annulée'
+                    and sortie.organisateur != utilisateur %}
+                    <form method="post"
+                          action="{{ path('sortie_desister', {'id': sortie.id}) }}"
+                          class="me-2"
+                          onsubmit="return confirm('Confirmation du désistement ?')">
+                        <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">
+                        <button class="btn btn-primary">Se désister</button>
+                    </form>
+                {% endif %}
+                <div class="row col-10 d-flex flex-column">
+                    <div class="d-flex">
+                        {% if sortie.organisateur == utilisateur and sortie.etat.libelle != 'Annulée' and sortie.dateHeureDebut > date() %}
+                            <a href="{{ path('sortie_annuler', {'idSortie' : sortie.id}) }}"
+                               class="btn btn-primary me-2">Annuler</a>
+                            <div class="col-md-4">
+                                <a href="{{ path("modifier_sortie", {'id': sortie.id}) }}" class="btn btn-primary">Modifier</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if sortie.etat.libelle == 'Créée' and sortie.organisateur.id == utilisateur.id %}
+                        <div class="col-4 mt-3">
+                            <a href="{{ path("etat_publie", {'id' : sortie.id}) }}"
+                               class="btn btn-primary">Publier la sortie</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-8 d-flex my-4 div-detail mx-auto justify-content-center">
+            <div class="col-6 mt-3 div-detail-col">
+                <h5>Liste des participants inscrits :</h5>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">pseudo</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Profil</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for participant in participants %}
+                        <tr>
+                            <th scope="row">{{ participant.pseudo }}</th>
+                            <td>{{ participant.prenom }} {{ participant.nom }}</td>
+                            <td><form method="post"
+                                      action="{{ path('default_participant', {'id': participant.id}) }}">
+                                    <input type="hidden" name="participantId" value="{{ participant.id }}">
+                                    <input type="hidden" name="sortieId" value="{{ sortie.id }}">
+                                    <button class="btn btn-primary btn-sm">Afficher</button>
+                                </form></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

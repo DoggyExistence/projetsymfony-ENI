@@ -1,0 +1,58 @@
+<tr class="text-center">
+    <th scope="row">{{ sortie.nom }}</th>
+    <td >{{ sortie.dateHeureDebut | date('d/m/Y h:i') }}</td>
+    <td class="trop-petit">{{ sortie.dateLimiteInscription | date('d/m/Y h:i') }}</td>
+    <td class="text-center trop-petit">{{ sortie.participants.count()}} / {{ sortie.nbInsciptionsMax }}</td>
+    <td class="trop-petit">{{ sortie.etat.libelle }}</td>
+    <td class="text-center trop-petit">
+        {% if sortie.participants.contains(utilisateur) %}
+            <span class="badge rounded-pill bg-success">Inscrit</span>
+        {% endif %}</td>
+    <td class="text-center trop-petit">{{sortie.organisateur.pseudo}}</td>
+    <td>
+        <div class="d-flex justify-content-around m-2">
+            <a href="{{ path('sortie_detail' , {'id' : sortie.id}) }}"
+               class="btn btn-primary btn-sm text-nowrap me-2">Afficher détails</a>
+            {% if sortie.etat.libelle != 'Annulée' and sortie.dateHeureDebut > date() and not sortie.participants.contains(utilisateur)
+                and sortie.organisateur != utilisateur %}
+                <form method="post" class="trop-petit"
+                      action="{{ path('sortie_inscrire', {'id': sortie.id}) }}"
+                      onsubmit="return confirm('Confirmation de l\'inscription ?')">
+                    <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">
+                    <button class="btn btn-primary btn-sm">S'inscrire</button>
+                </form>
+            {% elseif sortie.participants.contains(utilisateur) and sortie.dateHeureDebut > date() and sortie.etat.libelle != 'Annulée'
+                and sortie.organisateur != utilisateur%}
+                <form method="post" class="trop-petit"
+                      action="{{ path('sortie_desister', {'id': sortie.id}) }}"
+                      onsubmit="return confirm('Confirmation du désistement ?')">
+                    <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">
+                    <button class="btn btn-primary btn-sm">Se désister</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="d-flex justify-content-around m-2">
+{#            {% if sortie.participants.contains(utilisateur) and sortie.dateHeureDebut > date() and sortie.etat.libelle != 'Annulée'#}
+{#                and sortie.organisateur != utilisateur%}#}
+{#                <form method="post" class="trop-petit"#}
+{#                      action="{{ path('sortie_desister', {'id': sortie.id}) }}"#}
+{#                      onsubmit="return confirm('Confirmation du désistement ?')">#}
+{#                    <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">#}
+{#                    <button class="btn btn-primary btn-sm">Se désister</button>#}
+{#                </form>#}
+{#            {% endif %}#}
+            {% if sortie.organisateur == utilisateur and sortie.etat.libelle != 'Annulée' and sortie.dateHeureDebut > date() %}
+                <a href="{{ path('sortie_annuler', {'idSortie' : sortie.id}) }}"
+                   class="btn btn-primary btn-sm trop-petit">Annuler</a>
+                <form method="post" class="trop-petit"
+                      action="{{ path('modifier_sortie', {'id': sortie.id}) }}"
+                      onsubmit="return confirm('Etes-vous sûr?')">
+                    <input type="hidden" name="utilisateurId" value="{{ utilisateur.id }}">
+                    <button class="btn btn-primary btn-sm">Modifier</button>
+                </form>
+            {% endif %}
+
+        </div>
+    </td>
+</tr>

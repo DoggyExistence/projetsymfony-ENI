@@ -1,0 +1,27 @@
+
+{{ form_start(triForm) }}
+<section class="formRechercher">
+
+    <div class="formDiv">
+        {{ form_label(triForm.site, "Site : ") }}
+        {{ form_widget(triForm.site) }}
+        {{ form_label(triForm.motRecherche, "Le nom de la sortie contient : ") }}
+        {{ form_widget(triForm.motRecherche) }}
+        {{ form_label(triForm.dateDebut, "Depuis le") }}
+        {{ form_widget(triForm.dateDebut) }}
+        {{ form_label(triForm.dateFin, "Jusqu'au") }}
+        {{ form_widget(triForm.dateFin) }}
+    </div>
+
+    <div class="formDiv">
+        {{ form_widget(triForm.isOrga) }}
+        {{ form_widget(triForm.isInscrit) }}
+        {{ form_widget(triForm.isNonInscrit) }}
+        {{ form_widget(triForm.isPassee) }}
+    </div>
+
+    <div class="formDiv">
+        <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
+    </div>
+</section>
+{{ form_end(triForm) }}

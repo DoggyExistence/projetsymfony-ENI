@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+    <h1 class="text-center my-4">Mon profil</h1>
+{#    <p>Pseudo : {{ app.user.pseudo}}</p>#}
+{#    <p>Prénom : {{ app.user.prenom}}</p>#}
+{#    <p>Nom : {{ app.user.nom}}</p>#}
+{#    <p>Téléphone : {{ app.user.telephone}}</p>#}
+{#    <p>Email : {{ app.user.email}}</p>#}
+{#    <p>Site : {{ app.user.site.nom}}</p>#}
+
+{#    <p><a href="{{ path("default_modifier") }}"#}
+{#          class="btn btn-primary">Modifier mon profil</a></p>#}
+
+{#    <p><a href="{{ path("default_modifierMdp") }}"#}
+{#          class="btn btn-primary">Changer le mot de passe</a></p>#}
+
+    <div class="card mx-auto mt-3 mb-5" style="width: 30rem;">
+        <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ app.user.pseudo}}</h5>
+            <p class="card-text">Prénom : {{ app.user.prenom}}</p>
+            <p class="card-text">Nom : {{ app.user.nom}}</p>
+            <p class="card-text">Téléphone : {{ app.user.telephone}}</p>
+            <p class="card-text">Email : {{ app.user.email}}</p>
+            <p class="card-text">Site : {{ app.user.site.nom}}</p>
+            <div class="d-flex">
+                <p><a href="{{ path("default_modifier") }}"
+                      class="btn btn-primary me-2">Modifier mon profil</a></p>
+
+                <p><a href="{{ path("default_modifierMdp") }}"
+                      class="btn btn-primary me-2">Changer le mot de passe</a></p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

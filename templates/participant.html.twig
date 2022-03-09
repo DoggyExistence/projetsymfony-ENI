@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+    <div class="container">
+        <h1 class="text-center mb-4 mt-4">{{ participant.Pseudo}}</h1>
+
+        {% if sortie != "nepasafficher" %}
+        <a href="{{ path('sortie_detail' , {'id' : sortie.id}) }}"
+           class="btn btn-primary">Retourner sur le detail de la sortie</a>
+        {% endif %}
+        <div class="card mx-auto mt-3 mb-5" style="width: 30rem;">
+            <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ participant.pseudo}}</h5>
+                <p>Prénom : {{ participant.prenom }}</p>
+                <p>Nom : {{ participant.nom }}</p>
+                <p>Téléphone : {{ participant.telephone }}</p>
+                <p>Email : {{ participant.email}}</p><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

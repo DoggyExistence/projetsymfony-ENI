@@ -1,0 +1,132 @@
+body{
+    background: #f1f1f1;
+}
+
+.btn-afficher-tri, .btn-masquer-tri {
+    display: none;
+}
+
+.form-tri {
+    display: block;
+}
+
+.formRechercher {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.formDiv {
+    margin: 10px;
+    align-self: center;
+    flex-grow: 1;
+}
+
+.sortform{
+    /*border: 1px solid #2C3E50;*/
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px rgba(44, 62, 80, 0.5);
+}
+
+.card, .div-detail{
+    box-shadow: 2px 2px 5px 2px rgba(44, 62, 80, 0.5);
+}
+
+.div-detail{
+    border-radius: 5px;
+}
+
+.tableauUtilisateurs{
+    height: 500px;
+    overflow: scroll;
+}
+
+/* RESPONSIVE */
+
+
+/*Tablette*/
+@media(min-width: 768px) and (max-width: 1487px) { /*1388*/
+
+    body {
+        width :100% ;
+        padding :0;
+    }
+
+}
+
+/*Téléphone*/
+@media(max-width: 767px) {
+
+    body {
+        width :100% ;
+        padding :0;
+    }
+
+    .nav-link {
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+
+    .login {
+        text-align: center;
+        align-content: center;
+        margin-top: 10px;
+    }
+
+    .trop-petit {
+        display: none;
+    }
+
+    .formRechercher {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .formDiv {
+        padding: 0;
+        margin: 0;
+        align-self: center;
+        flex-grow: 1;
+    }
+
+    .form-tri {
+        display: none;
+    }
+
+    .titre-tri {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .btn-afficher-tri {
+        display: block;
+    }
+
+    .btn-masquer-tri {
+        display: none;
+    }
+
+    .div-detail {
+        display: flex;
+        flex-direction: column;
+        width: 95vw;
+    }
+
+    .div-detail-col {
+        display: block;
+        width: 95vw;
+    }
+
+    .centrer-element {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 30px;
+    }
+
+    .div-detail-col > p {
+        margin-bottom: 4px;
+    }
+}

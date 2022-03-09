@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+
+{{ form_start(formSortie) }}
+{{ form_widget(formSortie) }}
+
+<button type="submit" class="btn btn-info">Enregistrer</button>
+
+{{ form_end(formSortie) }}
+    <a href="{{ path("default_profil") }}"
+       class="btn btn-info">Annuler</a>
+{% endblock %}

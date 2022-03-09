@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+
+    {{ form_start(formSortie) }}
+    {{ form_widget(formSortie) }}
+    <input type="hidden" name="_token" value="{{ csrf_token('_token') }}"/>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-info ">Modifier</button>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ path("default_accueil") }}"
+               class="btn btn-info">Annuler</a>
+        </div>
+        {{ form_end(formSortie) }}
+    </div>
+{% endblock %}

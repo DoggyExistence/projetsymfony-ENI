@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+    <h1 class="mb-4 text-center">Mon profil ({{ app.user.nom }} {{ app.user.prenom }})</h1>
+    {{ form_start(formUtilisateur) }}
+
+    {{ form_row(formUtilisateur.pseudo) }}
+    {{ form_row(formUtilisateur.prenom) }}
+    {{ form_row(formUtilisateur.nom) }}
+    {{ form_row(formUtilisateur.telephone) }}
+    {{ form_row(formUtilisateur.email) }}
+    {{ form_row(formUtilisateur.site) }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a href="{{ path("default_profil") }}"
+          class="btn btn-primary">Annuler</a>
+    {{ form_end(formUtilisateur) }}
+{% endblock %}
